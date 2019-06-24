@@ -2,7 +2,7 @@ CREATE DATABASE ctedata
 
 USE ctedata
 
-CREATE TABLE Athletes (
+CREATE TABLE IF NOT EXISTS Athletes (
     Registration                    VARCHAR()       NOT NULL, --UTILIZAR IDENTITY? PERGUNTAR PRO DANIEL SOBRE GERACAO DE MATRICULAS --TAMANHO FIXO?
     Fullname                        VARCHAR(200)    NOT NULL,
     Birthdate                       DATE            NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE Athletes (
     PRIMARY KEY (Registration)
 );
 
-CREATE TABLE PhoneNumbers (
+CREATE TABLE IF NOT EXISTS PhoneNumbers (
     Athlete                         VARCHAR()       NOT NULL, --decidir tamanho da matricula
     "Number"                        VARCHAR(15)     NOT NULL,
     "Type"                          VARCHAR(15)     NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE PhoneNumbers (
     FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
 );
 
-CREATE TABLE EmergencyContacts (
+CREATE TABLE IF NOT EXISTS EmergencyContacts (
     Athlete                         VARCHAR()       NOT NULL,
     "Number"                        VARCHAR(15)     NOT NULL,
     "Name"                          VARCHAR(100)    NOT NULL,
@@ -78,7 +78,38 @@ CREATE TABLE EmergencyContacts (
     FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
 );
 
-CREATE TABLE AthleteFederations (
-    Athlete                         VARCHAR()       NOT NULL,
-    
+CREATE TABLE IF NOT EXISTS AthleteFederations (
+    "Name"                         VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name")
+);
+
+CREATE TABLE IF NOT EXISTS AthleteConFederations (
+    "Name"                         VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name")
+);
+
+CREATE TABLE IF NOT EXISTS AthleteInternationalFederations (
+    "Name"                         VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name")
+);
+
+CREATE TABLE IF NOT EXISTS Prova (
+    "Name"                         VARCHAR()       NOT NULL,
+    Modality                       VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name", Modality),
+    FOREIGN KEY (Modality) REFERENCES Modality("Name") ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Modalities (
+    "Name"                         VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name")
+);
+
+CREATE TABLE IF NOT EXISTS AthletesModalities (
+    Modality                         VARCHAR()       NOT NULL,
+    Athlete                          VARCHAR()       NOT NULL,
+    "Date"                           DATE()          NOT NULL,
+    PRIMARY KEY(Modality, Athlete),
+    FOREIGN KEY (Modality) REFERENCES Modality("Name") ON DELETE CASCADE,
+    FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
 );
