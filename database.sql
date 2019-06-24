@@ -93,16 +93,16 @@ CREATE TABLE IF NOT EXISTS AthleteInternationalFederations (
     PRIMARY KEY("Name")
 );
 
+CREATE TABLE IF NOT EXISTS Modalities (
+    "Name"                         VARCHAR()       NOT NULL,
+    PRIMARY KEY("Name")
+);
+
 CREATE TABLE IF NOT EXISTS Prova (
     "Name"                         VARCHAR()       NOT NULL,
     Modality                       VARCHAR()       NOT NULL,
     PRIMARY KEY("Name", Modality),
-    FOREIGN KEY (Modality) REFERENCES Modality("Name") ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS Modalities (
-    "Name"                         VARCHAR()       NOT NULL,
-    PRIMARY KEY("Name")
+    FOREIGN KEY (Modality) REFERENCES Modalities("Name") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS AthletesModalities (
@@ -110,6 +110,6 @@ CREATE TABLE IF NOT EXISTS AthletesModalities (
     Athlete                          VARCHAR()       NOT NULL,
     "Date"                           DATE()          NOT NULL,
     PRIMARY KEY(Modality, Athlete),
-    FOREIGN KEY (Modality) REFERENCES Modality("Name") ON DELETE CASCADE,
+    FOREIGN KEY (Modality) REFERENCES Modalities("Name") ON DELETE CASCADE,
     FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
 );
