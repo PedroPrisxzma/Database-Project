@@ -15,10 +15,19 @@ CREATE TABLE Athletes (
     MaritalStatus                   VARCHAR(10)     NOT NULL,
     FstGuardian                     VARCHAR(200)    NOT NULL,
     SndGuardian                     VARCHAR(200)    NOT NULL,
-    Category                        VARCHAR()       NOT NULL, --isso aqui nem sei o que é
-    Coach                           VARCHAR(200)    NOT NULL, --já entra com treinador? Não estão listados em tabela?
+    -- Category                        VARCHAR()       NOT NULL, --isso aqui nem sei o que é
+    Coach                           VARCHAR(200)    NOT NULL, --já entra com treinador?
     CteStartDate                    DATE            NOT NULL,
     CteEndDate                      DATE,   --isso é isso mesmo? a data que ele deixa o cte?
+
+
+    Federation                      VARCHAR()
+    FederationNumber
+    Confederation
+    ConfederationNumber
+    InternationalFederation
+    InternationalFederationNumber
+
     Financier                       VARCHAR(),  --é uma pessoa? uma empresa?
     SightedGuide                    VARCHAR(200), --ou referencia para outro atleta
     FstGuest                        VARCHAR(200),
@@ -28,6 +37,7 @@ CREATE TABLE Athletes (
     BloodType                       VARCHAR(3)      NOT NULL,
     MeanOfTransportation            VARCHAR(100),
     FinancialSupport                BIT             NOT NULL,
+    -- placa ou linha?
     NumberOfCars                    TINYINT,
     NumberOfServants                TINYINT,
     NumberOfWashingMachines         TINYINT,
@@ -82,3 +92,13 @@ CREATE TABLE AthleteFederations (
     Athlete                         VARCHAR()       NOT NULL,
     
 );
+
+CREATE TABLE AthleteConfederations (
+
+);
+
+CREATE TABLE InternationalFederationAthlete (
+
+);
+
+CREATE TABLE 
