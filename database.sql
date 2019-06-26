@@ -2,8 +2,8 @@ CREATE DATABASE ctedata
 
 USE ctedata
 
-CREATE TABLE Athletes (
-    Registration                    VARCHAR()       NOT NULL, --UTILIZAR IDENTITY? PERGUNTAR PRO DANIEL SOBRE GERACAO DE MATRICULAS --TAMANHO FIXO?
+CREATE TABLE IF NOT EXISTS Athletes (
+    Registration                    CHAR(10)        NOT NULL,
     Fullname                        VARCHAR(200)    NOT NULL,
     Birthdate                       DATE            NOT NULL,
     Rg                              CHAR(8)         NOT NULL,
@@ -13,31 +13,13 @@ CREATE TABLE Athletes (
     Gender                          CHAR(1)         NOT NULL,
     Email                           VARCHAR(100)    NOT NULL,
     MaritalStatus                   VARCHAR(10)     NOT NULL,
-    FstGuardian                     VARCHAR(200)    NOT NULL,
-    SndGuardian                     VARCHAR(200)    NOT NULL,
-    -- Category                        VARCHAR()       NOT NULL, --isso aqui nem sei o que é
-    Coach                           VARCHAR(200)    NOT NULL, --já entra com treinador?
     CteStartDate                    DATE            NOT NULL,
-    CteEndDate                      DATE,   --isso é isso mesmo? a data que ele deixa o cte?
-
-
-    Federation                      VARCHAR()
-    FederationNumber
-    Confederation
-    ConfederationNumber
-    InternationalFederation
-    InternationalFederationNumber
-
-    Financier                       VARCHAR(),  --é uma pessoa? uma empresa?
-    SightedGuide                    VARCHAR(200), --ou referencia para outro atleta
-    FstGuest                        VARCHAR(200),
-    SndGuest                        VARCHAR(200),
-    UpperLimbsDominance             CHAR(1)         NOT NULL, --BIT? AMBIDESTRO
-    LowerLimbsDominance             CHAR(1)         NOT NULL, --BIT?
+    CteEndDate                      DATE,
+    Category                        VARCHAR(50)     NOT NULL, -- to do
+    UpperLimbsDominance             CHAR(1)         NOT NULL,
+    LowerLimbsDominance             CHAR(1)         NOT NULL,
     BloodType                       VARCHAR(3)      NOT NULL,
     MeanOfTransportation            VARCHAR(100),
-    FinancialSupport                BIT             NOT NULL,
-    -- placa ou linha?
     NumberOfCars                    TINYINT,
     NumberOfServants                TINYINT,
     NumberOfWashingMachines         TINYINT,
@@ -50,10 +32,6 @@ CREATE TABLE Athletes (
     NumberOfMicrowaveOvens          TINYINT,
     NumberOfMotorcycles             TINYINT,
     NumberOfClothesDryers           TINYINT,
-    StreetType                      VARCHAR(), --?????????????
-    WaterSupply                     VARCHAR(), --??????????
-    FamilyHead                      VARCHAR(15),
-    FamilyHeadsLevelOfEducation     VARCHAR(20),
     Alergies                        BIT             NOT NULL,
     AlergiesDescription             VARCHAR(100),
     Cep                             CHAR(8)         NOT NULL,
@@ -65,40 +43,126 @@ CREATE TABLE Athletes (
     "State"                         CHAR(2)         NOT NULL,
     PrescriptionDrugs               BIT             NOT NULL,
     PrescriptionDrugsDescription    VARCHAR(150),
-
-    PRIMARY KEY (Registration)
+    StreetType                      VARCHAR(50),
+    WaterSupply                     VARCHAR(50),
+    FamilyHead                      VARCHAR(15),
+    FamilyHeadsLevelOfEducation     VARCHAR(20),
+    Coach                           VARCHAR(200)    NOT NULL,
+    Federation                      VARCHAR(100),
+    Confederation                   VARCHAR(100),
+    InternationalFederation         VARCHAR(100),
+    SightedGuide                    VARCHAR(200),
+    CarPlateOrBusLine               VARCHAR(8),
+    FstGuardian                     VARCHAR(200)    NOT NULL,
+    SndGuardian                     VARCHAR(200)    NOT NULL,
+    Financier                       VARCHAR(200),
+    FstGuest                        VARCHAR(200),
+    SndGuest                        VARCHAR(200),
+    FinancialSupport                BIT             NOT NULL,
+    FederationNumber                VARCHAR(100),
+    ConfederationNumber             VARCHAR(100),
+    InternationalFederationNumber   VARCHAR(100),
+    PRIMARY KEY (Registration),
+    FOREIGN KEY Federation REFERENCES Federations("Name") ON UPDATE CASCADE
+    FOREIGN KEY Confederation REFERENCES Confederations("Name") ON UPDATE CASCADE
+    FOREIGN KEY InternationalFederation REFERENCES InternationalFederations("Name") ON UPDATE CASCADE
+    FOREIGN KEY FstGuardian REFERENCES Guardians(Fullname) ON UPDATE CASCADE
+    FOREIGN KEY SndGuardian REFERENCES Guardians(Fullname) ON UPDATE CASCADE
+    FOREIGN KEY Financier REFERENCES Financier(Fullname) ON UPDATE CASCADE
+    FOREIGN KEY Coach REFERENCES Coaches(Fullname) ON UPDATE CASCADE
+    FOREIGN KEY FstGuest REFERENCES Guests(Rg) ON UPDATE CASCADE
+    FOREIGN KEY SndGuest REFERENCES Guests(Rg) ON UPDATE CASCADE
 );
 
-CREATE TABLE PhoneNumbers (
-    Athlete                         VARCHAR()       NOT NULL, --decidir tamanho da matricula
+CREATE TABLE IF NOT EXISTS PhoneNumbers (
+    Athlete                         VARCHAR(10)     NOT NULL,
     "Number"                        VARCHAR(15)     NOT NULL,
     "Type"                          VARCHAR(15)     NOT NULL,
-
     PRIMARY KEY(Athlete,"Number"),
-    FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
+    FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE 
 );
 
-CREATE TABLE EmergencyContacts (
-    Athlete                         VARCHAR()       NOT NULL,
+CREATE TABLE IF NOT EXISTS EmergencyContacts (
+    Athlete                         VARCHAR(10)     NOT NULL,
     "Number"                        VARCHAR(15)     NOT NULL,
     "Name"                          VARCHAR(100)    NOT NULL,
     Connection                      VARCHAR(50)     NOT NULL,
-
     PRIMARY KEY(Athlete,"Number"),
     FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE
 );
 
-CREATE TABLE AthleteFederations (
-    Athlete                         VARCHAR()       NOT NULL,
-    
+CREATE TABLE IF NOT EXISTS Federations (
+    "Name"                          VARCHAR(100)    NOT NULL,
+    PRIMARY KEY("Name")
 );
 
-CREATE TABLE AthleteConfederations (
-
+CREATE TABLE IF NOT EXISTS Confederations (
+    "Name"                          VARCHAR(100)    NOT NULL,
+    PRIMARY KEY("Name")
 );
 
-CREATE TABLE InternationalFederationAthlete (
-
+CREATE TABLE IF NOT EXISTS InternationalFederations (
+    "Name"                          VARCHAR(100)    NOT NULL,
+    PRIMARY KEY("Name")
 );
 
-CREATE TABLE 
+CREATE TABLE IF NOT EXISTS Modalities (
+    "Name"                          VARCHAR(50)      NOT NULL,
+    PRIMARY KEY("Name")
+);
+
+CREATE TABLE IF NOT EXISTS Events (
+    "Name"                          VARCHAR(100)     NOT NULL,
+    Modality                        VARCHAR(50)      NOT NULL,
+    PRIMARY KEY("Name", Modality),
+    FOREIGN KEY (Modality) REFERENCES Modalities("Name") ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS MainEvents (
+    Athlete                         VARCHAR(10)      NOT NULL,
+    "Name"                          VARCHAR(100)     NOT NULL,
+    Modality                        VARCHAR(50)      NOT NULL,
+    PRIMARY KEY (Athlete, "Name", Modality),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY ("Name", Modality) REFERENCES Events("Name", ModalitY) ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS AthleteModalities (
+    Modality                        VARCHAR(50)      NOT NULL,
+    Athlete                         VARCHAR(10)      NOT NULL,
+    "Date"                          DATE             NOT NULL,
+    PRIMARY KEY(Modality, Athlete),
+    FOREIGN KEY (Modality) REFERENCES Modalities("Name") ON UPDATE CASCADE,
+    FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS HealthInsurance (
+    Athlete                         VARCHAR(10)     NOT NULL,
+    Carrier                         VARCHAR(50)     NOT NULL,
+    "Number"                        VARCHAR(100)    NOT NULL UNIQUE,
+    PRIMARY KEY (Athlete, Carrier),
+    FOREIGN KEY (Athlete) REFERENCES Athletes(Registration) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Guardians (
+    Fullname                        VARCHAR(200)    NOT NULL,
+    PRIMARY KEY (Fullname)
+);
+
+CREATE TABLE IF NOT EXISTS Financier (
+    Fullname                        VARCHAR(200     NOT NULL,
+    PRIMARY KEY (Fullname)
+);
+
+CREATE TABLE IF NOT EXISTS Coaches (
+    Fullname                        VARCHAR(200)    NOT NULL,
+    Cref                            VARCHAR(100)    NOT NULL,
+    PRIMARY KEY (Fullname, Cref)
+);
+
+CREATE TABLE IF NOT EXISTS Guests (
+    Rg                              CHAR(10)        NOT NULL,
+    Fullname                        VARCHAR(200)    NOT NULL,
+    PhoneNumber                     VARCHAR(20)     NOT NULL,
+    PRIMARY KEY (Rg)
+);
