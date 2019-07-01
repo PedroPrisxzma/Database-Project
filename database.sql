@@ -166,3 +166,232 @@ CREATE TABLE IF NOT EXISTS Guests (
     PhoneNumber                     VARCHAR(20)     NOT NULL,
     PRIMARY KEY (Rg)
 );
+
+CREATE TABLE IF NOT EXISTS Weights (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Heights (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS SittingHeights (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Wingspans (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS RightLowerLimbLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTTS LeftLowerLimbLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS RightUpperLimbLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS LeftUpperLimbLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FootLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS HandLenghts (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Tests (
+    "Name"                          CHAR(100)       NOT NULL,
+    PRIMARY KEY ("Name")
+);
+
+CREATE TABLE IF NOT EXISTS FrontalPlank (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Time                            TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS MedicineBallThrow (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Measure                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FiveKilogramsThrow (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    FstMeasure                      FLOAT           NOT NULL,
+    SndMeasure                      FLOAT           NOT NULL,
+    TrdMeasure                      FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FortyMeters (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    FstMeasure                      TIMESTAMP       NOT NULL,
+    SndMeasure                      TIMESTAMP       NOT NULL,
+    TrdMeasure                      TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ThreeHundredMeters (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    FstMeasure                      TIMESTAMP       NOT NULL,
+    SndMeasure                      TIMESTAMP       NOT NULL,
+    TrdMeasure                      TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TwoThousandMeters (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    FstMeasure                      TIMESTAMP       NOT NULL,
+    SndMeasure                      TIMESTAMP       NOT NULL,
+    TrdMeasure                      TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Throws (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    "Type"                          VARCHAR(35)     NOT NULL,
+    FstMeasure                      TIMESTAMP       NOT NULL,
+    SndMeasure                      TIMESTAMP       NOT NULL,
+    TrdMeasure                      TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TripleJumps (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    "Type"                          VARCHAR(35)     NOT NULL,
+    FstMeasure                      TIMESTAMP       NOT NULL,
+    SndMeasure                      TIMESTAMP       NOT NULL,
+    TrdMeasure                      TIMESTAMP       NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Wingates (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Limb                            CHAR(1)         NOT NULL,
+    "Power"                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS OneRepetitionMaximum (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Exercise                        CHAR(20)        NOT NULL,
+    Machine                         CHAR(20)        NOT NULL,
+    AbsoluteValue                   FLOAT           NOT NULL,
+    RelativeValue                   FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS SeatedJump (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    FstJump                         FLOAT           NOT NULL,
+    SndJump                         FLOAT           NOT NULL,
+    TrdJump                         FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS MaximumVO2 (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    AbsoluteValue                   FLOAT           NOT NULL,
+    RelativeValue                   FLOAT           NOT NULL,
+    Duration                        TIMESTAMP       NOT NULL,
+    Obs                             VARCHAR(200)    NOT NULL,
+    "Type"                          VARCHAR(20)     NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS DynamicBar (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    NumberOfRepetitions             INT             NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Skinfolds (
+    Athlete                         CHAR(10)        NOT NULL,
+    "Date"                          DATE            NOT NULL,
+    Triceps                         FLOAT           NOT NULL,
+    Subscapular                     FLOAT           NOT NULL,
+    Biceps                          FLOAT           NOT NULL,
+    Breastplate                     FLOAT           NOT NULL,
+    Subaxillary                     FLOAT           NOT NULL,
+    Suprailiaca                     FLOAT           NOT NULL,
+    Abdominal                       FLOAT           NOT NULL,
+    Tight                           FLOAT           NOT NULL,
+    Calf                            FLOAT           NOT NULL,
+    PRIMARY KEY (Athlete, "Date"),
+    FOREIGN KEY Athlete REFERENCES Athletes(Registration) ON DELETE CASCADE
+);
